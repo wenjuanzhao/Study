@@ -91,3 +91,59 @@ const source$=Observable.fromEvent(document.querySelector("#clickme"),"click");
 source$.subscribe(function () {
     document.querySelector("#text").innerText=clickNum++;
 })*/
+//数据流合并
+/*
+ concat首尾合并
+const source1$=Observable.of([1,3,5]);
+const source2$=Observable.of([2,4,6]);
+//const complete=Observable.concat(source1$,source2$);
+const complete=source1$.concat(source2$);
+complete.subscribe(function (item) {
+    console.log(item)
+})
+*/
+/*merge先到先得快速通过  */
+/*
+const source1$=Observable.timer(0,1000).map(function (item) {
+     return item+"A";
+})
+const source2$=Observable.timer(500,1000).map(function (item) {
+    return item+"B"
+})
+const res=Observable.merge(source1$,source2$);
+res.subscribe(function (item) {
+    console.log(item)
+},function (error) {
+    console.log(error)
+},function () {
+    console.log("complete")
+})*/
+//zip拉链式合并 一对一的合并
+/*
+const source1$=Observable.of('1','2','3');
+const source2$=Observable.of('a','b','c');
+const res$=Observable.zip(source1$,source2$);
+res$.subscribe(console.log,null,function () {
+    console.log("complete")
+})
+*/
+//combineLatest 合并每个Observable中的最后一个数形新的数据流
+/*
+const source1$=Observable.timer(500,1000);
+const source2$=Observable.timer(1000,1000);
+const res$=Observable.combineLatest(source1$,source2$);
+res$.subscribe(function (item) {
+     console.log(item)
+},function (error) {
+    console.log(error)
+},function () {
+    console.log("complete")
+})*/
+const source1$=Observable.of('a','b','c');
+const source2$=Observable.of(1,2,3);
+const res$=source1$.combineLatest(source2$);
+res$.subscribe(function (item) {
+    console.log(item)
+},null,function () {
+    console.log("complete")
+})
